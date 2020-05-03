@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "funnypolls",
+      "public": "dist/funnypolls",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

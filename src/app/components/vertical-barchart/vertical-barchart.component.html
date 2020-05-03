@@ -1,0 +1,23 @@
+<!-- <ngx-charts-bar-vertical
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="multi"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="false"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  (select)="onSelect($event)">
+</ngx-charts-bar-vertical> -->
+
+<!-- [view]="view" -->
+<div style="height: 350px; min-width: 500px;">
+  <ngx-charts-bar-vertical-2d [scheme]="colorScheme" [results]="multi" [gradient]="gradient" [xAxis]="showXAxis"
+    [yAxis]="showYAxis" [legend]="showLegend" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel"
+    [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel" [legendTitle]="legendTitle" (select)="onSelect($event)"
+    (activate)="onActivate($event)" (deactivate)="onDeactivate($event)">
+  </ngx-charts-bar-vertical-2d>
+</div>

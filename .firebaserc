@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "funnypoll-1b479": {
+      "hosting": {
+        "funnypolls": [
+          "funnypoll-1b479"
+        ]
+      }
+    }
+  }
+}
