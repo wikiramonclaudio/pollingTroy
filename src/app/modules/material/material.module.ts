@@ -12,6 +12,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 @NgModule({
   declarations: [],
   imports: [
@@ -27,7 +29,9 @@ import {MatRadioModule} from '@angular/material/radio';
     MatCardModule,
     MatMenuModule,
     MatBadgeModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   exports: [
     CommonModule,
@@ -42,7 +46,9 @@ import {MatRadioModule} from '@angular/material/radio';
     MatCardModule,
     MatMenuModule,
     MatBadgeModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule,
+    MatFormFieldModule
   ]
 })
 export class MaterialModule { }

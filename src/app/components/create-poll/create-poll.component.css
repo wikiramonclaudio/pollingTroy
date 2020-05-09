@@ -1,4 +1,4 @@
-.full-width {
+/* .full-width {
   width: 100%;
 }
 
@@ -24,4 +24,13 @@
 
 .col:last-child {
   margin-right: 0;
+} */
+
+mat-form-field {
+  width: 100%;
+  max-width: 600px;
+}
+
+.main-card{
+  border-radius: 30px!important;
 }

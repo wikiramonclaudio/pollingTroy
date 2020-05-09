@@ -11,8 +11,8 @@
   </div>
   <div class="row mt-2">
     <div class="col-lg-3 col-md-6">
-      <mat-card class="main-card">
-        <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
+      <mat-card class="main-card animated zoomIn">
+        <mat-card-content class="slow d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex justify-content-center align-items-end">
             <mat-icon color="primary" class="mat-18 mr-2 header-card-icon">supervised_user_circle</mat-icon>
             <h4 class="mb-0 ml-2" style="line-height: normal;">Followers</h4>
@@ -28,8 +28,8 @@
       </mat-card>
     </div>
     <div class="col-lg-3 col-md-6">
-      <mat-card class="main-card">
-        <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
+      <mat-card class="main-card animated zoomIn">
+        <mat-card-content class="slow d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex justify-content-center align-items-end">
             <mat-icon color="accent" class="mat-18 mr-2 header-card-icon">comment</mat-icon>
             <h4 class="mb-0 ml-2" style="line-height: normal;">Comments</h4>
@@ -45,8 +45,8 @@
       </mat-card>
     </div>
     <div class="col-lg-3 col-md-6">
-      <mat-card class="main-card">
-        <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
+      <mat-card class="main-card animated zoomIn">
+        <mat-card-content class="slow d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex justify-content-center align-items-end">
             <mat-icon color="warn" class="mat-18 mr-2 header-card-icon">thumb_up</mat-icon>
             <h4 class="mb-0 ml-2" style="line-height: normal;">Likes</h4>
@@ -62,8 +62,8 @@
       </mat-card>
     </div>
     <div class="col-lg-3 col-md-6">
-      <mat-card class="main-card">
-        <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
+      <mat-card class="main-card animated zoomIn">
+        <mat-card-content class="slow d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex justify-content-center align-items-end">
             <mat-icon color="primary" class="mat-18 mr-2 header-card-icon">dvr</mat-icon>
             <h4 class="mb-0 ml-2" style="line-height: normal;">Posts</h4>
@@ -88,28 +88,32 @@
   </div>
   <div class="row mt-1">
     <div class="col-md-6">
-      <mat-card class="main-card">
-        <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
+      <mat-card class="main-card animated zoomIn">
+        <mat-card-content class="d-flex justify-content-center align-items-center flex-column poll-card">
           <!-- <app-vertical-barchart></app-vertical-barchart> -->
           <!-- <app-bar-chart></app-bar-chart> -->
-          <p class="question mt-2" style="font-size: 16px;font-weight: 500;">¿Who is the best fIghter ever in UFC?</p>
+          <p class="question mt-2" style="font-size: 16px;font-weight: 500;">{{pollService.activeDashboardPoll.question}}</p>
           <mat-radio-group color="primary" aria-labelledby="answer-radio-group-label"
-            class="answer-radio-group d-flex flex-column">
-            <mat-radio-button class="pool-radio-button mt-2" *ngFor="let answer of answers" [value]="answer">
-              {{answer.text}}
+            class="answer-radio-group d-flex flex-column flex-wrap" [(ngModel)]="result" (change)="changeSelection()">
+            <mat-radio-button class="pool-radio-button mt-2 mr-2" [value]="i" *ngFor="let answer of pollService.activeDashboardPoll.optionlabels; let i = index;">
+              {{answer}}
             </mat-radio-button>
           </mat-radio-group>
           <div class="d-flex">
-            <button mat-raised-button color="primary" class="mt-2">Send</button>
-            <button mat-raised-button color="accent" class="mt-2 ml-2">Next question</button>
+            <button mat-raised-button color="primary" class="mt-2" (click)="sendVote()" >Send</button>
+            <button mat-raised-button color="accent" class="mt-2 ml-2" (click)="nextQuestion()" >Next question</button>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
     <div class="col-md-6">
-      <mat-card class="main-card">
-        <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
-          <app-pie-chart></app-pie-chart>
+      <mat-card class="main-card animated zoomIn">
+        <mat-card-content class="d-flex justify-content-center align-items-center flex-column poll-card">
+          <app-pie-chart
+          [pieChartLabels]="pollService.activeDashboardPoll.optionlabels"
+          [pieChartData]="pollService.activeDashboardPoll.votes"
+          [events]="updateChartSubject.asObservable()"
+          ></app-pie-chart>
         </mat-card-content>
       </mat-card>
     </div>
@@ -121,7 +125,7 @@
   </div>
   <div class="row mt-2">
     <div class="col-md-2">
-      <mat-card class="main-card">
+      <mat-card class="main-card animated zoomIn">
         <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex flex-column justtify-content-center align-items-center most-active-user-card">
             <p matBadge="1" matBadgeOverlap="false">
@@ -143,7 +147,7 @@
       </mat-card>
     </div>
     <div class="col-md-2">
-      <mat-card class="main-card">
+      <mat-card class="main-card animated zoomIn">
         <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex flex-column justtify-content-center align-items-center most-active-user-card">
             <p matBadge="2" matBadgeOverlap="false">
@@ -159,7 +163,7 @@
       </mat-card>
     </div>
     <div class="col-md-2">
-      <mat-card class="main-card">
+      <mat-card class="main-card animated zoomIn">
         <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex flex-column justtify-content-center align-items-center most-active-user-card">
             <p matBadge="3" matBadgeOverlap="false">
@@ -175,7 +179,7 @@
       </mat-card>
     </div>
     <div class="col-md-2">
-      <mat-card class="main-card">
+      <mat-card class="main-card animated zoomIn">
         <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex flex-column justtify-content-center align-items-center most-active-user-card">
             <p matBadge="4" matBadgeOverlap="false">
@@ -191,7 +195,7 @@
       </mat-card>
     </div>
     <div class="col-md-2">
-      <mat-card class="main-card">
+      <mat-card class="main-card animated zoomIn">
         <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex flex-column justtify-content-center align-items-center most-active-user-card">
             <p matBadge="5" matBadgeOverlap="false">
@@ -207,7 +211,7 @@
       </mat-card>
     </div>
     <div class="col-md-2">
-      <mat-card class="main-card">
+      <mat-card class="main-card animated zoomIn">
         <mat-card-content class="d-flex justify-content-center align-items-center flex-column">
           <div class="d-flex flex-column justtify-content-center align-items-center most-active-user-card">
             <p matBadge="6" matBadgeOverlap="false">

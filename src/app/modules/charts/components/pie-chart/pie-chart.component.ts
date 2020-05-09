@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pie-chart',
@@ -24,8 +25,8 @@ export class PieChartComponent implements OnInit {
     // }
   };
   // public pieChartLabels: Label[] = [['Download', 'Sales'], ['In', 'Store', 'Sales'], 'Mail Sales'];
-  public pieChartLabels: Label[] = ['John Jones', 'Anderson Silva', 'Khabib'];
-  public pieChartData: number[] = [300, 500, 100];
+  // public pieChartLabels: Label[] = ['John Jones', 'Anderson Silva', 'Khabib'];
+  // public pieChartData: number[] = [300, 500, 100];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = false;
   public pieChartPlugins = [pluginDataLabels];
@@ -35,9 +36,28 @@ export class PieChartComponent implements OnInit {
     },
   ];
 
+  @Input() pieChartLabels: any[];
+  @Input() pieChartData: any[];
+
+  private eventsSubscription: Subscription;
+  @Input() events: Observable<void>;
+
+
   constructor() { }
 
   ngOnInit() {
+    // subscrimption to u`date data to refresh the chart
+    this.eventsSubscription = this.events.subscribe(() => this.refreshData());
+  }
+
+  refreshData(){
+    console.log('NEW DATA RECEIVED TON CHATR');
+    console.log('pieChartData',this.pieChartData);
+    this.changeLegendPosition();
+  }
+
+  ngOnDestroy() {
+    this.eventsSubscription.unsubscribe();
   }
 
   // events
@@ -73,5 +93,10 @@ export class PieChartComponent implements OnInit {
 
   changeLegendPosition() {
     this.pieChartOptions.legend.position = this.pieChartOptions.legend.position === 'left' ? 'top' : 'left';
+    // this.pieChartOptions.legend.position = 'top';
+  }
+
+  updateChartData() {
+
   }
 }

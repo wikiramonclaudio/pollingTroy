@@ -8,11 +8,11 @@
 
       <mat-menu #appMenu="matMenu">
         <mat-nav-list>
-          <a mat-list-item routerLink="/signin">
+          <a mat-list-item routerLink="/main">
             <mat-icon color="primary" class="mat-18 mr-2">home</mat-icon>
             <span>Home</span>
           </a>
-          <a mat-list-item routerLink="/signin">
+          <a mat-list-item routerLink="/main/create-poll">
             <mat-icon color="primary" class="mat-18 mr-2">create</mat-icon>
             <span>Crear encuesta</span>
           </a>
@@ -45,7 +45,26 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span class="topbar-spacer"></span>
-      <img [src]="userService.user.photoURL" alt="" width="38" class="rounded-circle">
+      <mat-menu #userMenu="matMenu">
+        <mat-nav-list>
+          <a mat-list-item class="mr-3" routerLink="/main/profile">
+            <mat-icon color="primary" class="mat-18 mr-2">person_pin</mat-icon>
+            <span>Profile</span>
+          </a>
+          <a mat-list-item class="mr-3" href="#" (click)="logout();">
+            <!-- <mat-icon color="primary" class="mat-18 mr-2">search</mat-icon> -->
+            <mat-icon color="primary" class="mat-18 mr-2">power_settings_new</mat-icon>
+            <span>Exit</span>
+          </a>
+        </mat-nav-list>
+      </mat-menu>
+
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <!-- <mat-icon>more_vert</mat-icon> -->
+        <img [src]="userService.user.photoURL || './assets/images/users/noimg.svg'" alt="" width="38"
+          class="rounded-circle" class="top-user-picture rounded-circle">
+      </button>
+
       <!-- <span>Funny Polls</span> -->
     </mat-toolbar>
     <!-- Add Content Here -->

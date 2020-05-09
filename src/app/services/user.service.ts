@@ -12,8 +12,9 @@ export class UserService {
 
   user: any = {};
   items: Observable<any[]>;
+  fbUser: any;
   constructor(
-    firestore: AngularFirestore,
+    private firestore: AngularFirestore,
     public auth: AngularFireAuth,
     private router: Router
   ) {
@@ -25,11 +26,13 @@ export class UserService {
         if (!user) {
           return;
         }
+        this.fbUser = user;
+        const userWithoutName = user.email.split('@', 1);
         // this.usuario = user;
-        this.user.name = user.displayName;
+        this.user.name = user.displayName || userWithoutName[0].charAt(0).toUpperCase() + userWithoutName[0].slice(1);
         this.user.email = user.email;
         this.user.uid = user.uid;
-        this.user.photoURL = user.photoURL;
+        this.user.photoURL = user.photoURL == null ? './assets/images/users/noimage.jpg' : user.photoURL;
         this.router.navigate(['/main']);
       },
       (err) => { console.log('ERROR', err); }
@@ -43,9 +46,12 @@ export class UserService {
   loginByEmal(user: any) {
     this.auth.signInWithEmailAndPassword(user.email, user.password).then((value) => {
       this.user = value;
+      const userWithoutName = value.user.email.split('@', 1);
+      this.fbUser = user;
       this.user = {
-        photoURL: value.user.photoURL,
-        displayName: value.user.displayName,
+        // photoURL: value.user.photoURL,
+        photoURL: value.user.photoURL == null ? './assets/images/users/noimage.jpg' : value.user.photoURL,
+        displayName: value.user.displayName || userWithoutName[0].charAt(0).toUpperCase() + userWithoutName[0].slice(1),
         email: value.user.email,
         uid: value.user.uid
       };
@@ -54,9 +60,8 @@ export class UserService {
   }
 
   loginByGoogle() {
-    this.auth.signInWithPopup(new auth.GoogleAuthProvider()).then( (value) => {
-      console.log('LOGEADO POR GOOGLE', value);
-    }).catch( (err) => {
+    this.auth.signInWithPopup(new auth.GoogleAuthProvider()).then((value) => {
+    }).catch((err) => {
       console.log('ERROR', err);
     });
   }
@@ -71,8 +76,22 @@ export class UserService {
     });
   }
 
-  getUser(){
+  getUser() {
     return this.user;
+  }
+
+  editUser(name?: string, photoUrl: string = null) {
+    return this.fbUser.updateProfile({
+      displayName: name,
+      photoURL: photoUrl
+    });
+    this.user.photoURL = photoUrl;
+  }
+
+  editUserPicture(photoUrl: string) {
+    return this.fbUser.updateProfile({
+      photoURL: photoUrl
+    });
   }
 
 }

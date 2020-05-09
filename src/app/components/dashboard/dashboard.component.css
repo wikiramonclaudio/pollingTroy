@@ -46,3 +46,11 @@
 .answer-radio-group{
   height: 134px;
 }
+
+mat-card-content{
+  height: 190px;
+}
+
+mat-card-content.poll-card {
+  height: 250px;
+}

@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AuthGuard } from './guards/auth-guard.guard';
 import { MainComponent } from './modules/main/main.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
@@ -6,7 +7,6 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent },
   {
@@ -15,6 +15,8 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./modules/main/main.module').then(m => m.MainModule)
   },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', component: PageNotFoundComponent}
 ];
 
 // @NgModule({

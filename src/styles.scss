@@ -1,0 +1,14 @@
+@import '~@angular/material/theming';
+// @import './app.theme';
+
+// .accent-color {
+//   color: mat-color($accent) !important;
+// }
+
+// .primary-color {
+//   color: mat-color($primary) !important;
+// }
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: transparent;
+}

@@ -1,26 +1,25 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class PollService {
   protected itemsCollection: AngularFirestoreCollection<any>;
+  items: Observable<any[]>;
   // crear despues interface poll
   public polls: any[] = [];
+  activeDashboardPoll: any = { optionlabels: [], votes: [], question: '', oid: ''};
   constructor(
     private firestore: AngularFirestore
   ) {
-
+    // this.itemsCollection = this.firestore.collection('polls', ref => ref.orderBy('initdate', 'desc').limit(10));
   }
 
   addPoll(poll: any) {
-    // const mensaje: Mensaje = {
-    //   nombre: this.usuario.nombre,
-    //   mensaje: texto,
-    //   fecha: new Date().getTime(),
-    //   uid: this.usuario.uid
-    // };
+    poll.initdate = Math.round(new Date().getTime() / 1000);
+    poll.enddate = Math.round(new Date().getTime() / 1000);
     return this.itemsCollection.add(poll);
   }
 
@@ -29,21 +28,39 @@ export class PollService {
   }
 
   getPolls(){
-    this.itemsCollection = this.firestore.collection<any>('polls', ref => ref.orderBy('initdate', 'desc').limit(10));
-    // this.items = this.itemsCollection.valueChanges();
-    return this.itemsCollection.valueChanges()
-      .pipe(map((mensajes: any[]) => {
+    this.itemsCollection = this.firestore.collection('polls', ref => ref.orderBy('initdate', 'desc').limit(10));
+    return this.itemsCollection.valueChanges({idField: 'oid'})
+      .pipe(map((polls: any[]) => {
         this.polls = [];
-        for (const mensaje of mensajes) {
-          this.polls.unshift(mensaje);
+        this.nextDashboardPoll();
+        for (const poll of polls) {
+          this.polls.unshift(poll);
         }
-        // this.chats = mensajes;
+        // this.polls = polls;
       }));
   }
 
-  toTimestamp(year,   month, day, hour, minute, second){
-    let datum = new Date(Date.UTC(year, month - 1, day, hour, minute, second));
-    return datum.getTime() / 1000;
-   }
+  cargarPolls() {
+    this.itemsCollection = this.firestore.collection('polls', ref => ref.orderBy('initdate', 'desc').limit(10));
+
+    return this.firestore.collection('polls', ref => ref.orderBy('initdate', 'desc').limit(10)).valueChanges()
+      .pipe(map((polls: any[]) => {
+        this.polls = [];
+        for (const poll of polls) {
+          this.polls.unshift(poll);
+        }
+      }));
+  }
+
+  editPoll(oid: string, updatedPoll: any) {
+    return this.firestore.collection('polls').doc(oid).set(updatedPoll);
+  }
+
+  nextDashboardPoll(){
+    const pos = Math.round(Math.random() * 5);
+    if ( this.polls.length > 0 ){
+      this.activeDashboardPoll = this.polls[pos];
+    }
+  }
 
 }

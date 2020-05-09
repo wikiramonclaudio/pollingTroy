@@ -1,0 +1,43 @@
+.user-card {
+  min-height: 400px;
+  padding: 20px 0 20px 0;
+  width: 100%;
+  max-width: 600px;
+  /* background-color: rgb(44, 39, 39); */
+  background-color: white;
+  border-radius: 30px;
+}
+
+.user-card .card-footer {
+  height: 70;
+  background-color: rgb(198, 223, 236);
+}
+
+.container-profile {
+  margin-top: 10%;
+}
+
+.user-card .user-image {
+  border: 6px solid rgb(160, 150, 150);
+  transition: 0.7s all;
+  cursor: pointer;
+}
+
+.user-card .user-image:hover {
+  border-color: rgb(76, 76, 212);
+  transition: 0.7s all;
+  cursor: pointer;
+}
+
+.user-card .edit-name-icon {
+  height: 26px;
+  width: 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.user-card .edit-name-icon:hover {
+  font-weight: 800;
+  color: rgb(28, 175, 28);
+}
