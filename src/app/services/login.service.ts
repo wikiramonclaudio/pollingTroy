@@ -1,3 +1,4 @@
+import { UserService } from 'src/app/services/user.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -8,50 +9,47 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class LoginService {
 
   user: any = {};
   users: Observable<any[]>;
   fbUser: any;
   itemsCollection: any;
-  subscribed: boolean;
   constructor(
     private firestore: AngularFirestore,
     public auth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     this.users = firestore.collection('users').valueChanges();
     this.itemsCollection = this.firestore.collection('users');
-    if (!this.subscribed) {
-      this.auth.authState.subscribe(
-        (user: any) => {
-          this.subscribed = true;
-          console.log('usuario LOGGED en USERSERVICE', user);
-          if (!user) {
-            return;
-          }
-          this.fbUser = user;
-          const userWithoutName = user.email.split('@', 1);
-          // this.usuario = user;
-          this.user.name = user.displayName || userWithoutName[0].charAt(0).toUpperCase() + userWithoutName[0].slice(1);
-          this.user.email = user.email;
-          this.user.uid = user.uid;
-          this.user.photoURL = user.photoURL == null ? './assets/images/users/noimage.jpg' : user.photoURL;
-          this.router.navigate(['/main']);
-        },
-        (err) => { console.log('ERROR', err); }
-      );
-    }
+    // this.auth.authState.subscribe(
+    //   (user: any) => {
+    //     console.log('USUARIO LOGEADO EN LOGIN SERVICE');
+    //     if (!user) {
+    //       return;
+    //     }
+    //     this.fbUser = user;
+    //     const userWithoutName = user.email.split('@', 1);
+    //     // this.usuario = user;
+    //     this.user.name = user.displayName || userWithoutName[0].charAt(0).toUpperCase() + userWithoutName[0].slice(1);
+    //     this.user.email = user.email;
+    //     this.user.uid = user.uid;
+    //     this.user.photoURL = user.photoURL == null ? './assets/images/users/noimage.jpg' : user.photoURL;
+    //     // this.router.navigate(['/main']);
+
+    //     this.userService.user.name = user.displayName || userWithoutName[0].charAt(0).toUpperCase() + userWithoutName[0].slice(1);
+    //     this.userService.user.email = user.email;
+    //     this.userService.user.uid = user.uid;
+    //     this.userService.user.photoURL = user.photoURL == null ? './assets/images/users/noimage.jpg' : user.photoURL;
+    //     this.router.navigate(['/main']);
+    //   },
+    //   (err) => { console.log('ERROR', err); }
+    // );
   }
 
   createUser(user: any) {
     return this.auth.createUserWithEmailAndPassword(user.email, user.password);
-  }
-
-  addUserData(user: any) {
-    user.uid = this.user.uid;
-    console.log('UILD', user.uid);
-    return this.itemsCollection.add(user);
   }
 
   loginByEmal(user: any) {
@@ -110,6 +108,12 @@ export class UserService {
       photoURL: photoUrl
     });
     this.user.photoURL = photoUrl;
+  }
+
+  addUserData(user: any) {
+    user.uid = this.user.uid;
+    console.log('UILD', user.uid);
+    return this.itemsCollection.add(user);
   }
 
   editUserPicture(photoUrl: string) {

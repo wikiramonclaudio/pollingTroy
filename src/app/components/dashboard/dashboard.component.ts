@@ -57,13 +57,13 @@ export class DashboardComponent implements OnInit {
   }
 
   getPolls() {
-    this.polls = this.pollService.polls;
-    this.nextQuestion();
-    console.log(this.polls);
+    // this.nextQuestion();
     this.pollService.getPolls().subscribe(
       () => {
+        this.polls = this.pollService.polls;
         console.log('nueva data obtenida');
         this.emitEventToChild();
+        this.nextQuestion();
       }
     );
   }

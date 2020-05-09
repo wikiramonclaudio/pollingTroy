@@ -1,3 +1,4 @@
+import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -48,13 +49,13 @@ export class LoginComponent implements OnInit {
 
   register() {
     if (this.passwordFormControl.valid && this.emailFormControl.valid) {
-      const newUser = {
+      const newUser:any = {
         email: this.emailFormControl.value,
         password: this.passwordFormControl.value
       };
       this.userService.createUser(newUser)
         .then((ok) => {
-          console.log('USUARIO REGISTRADO CORRECTAMENTE', ok);
+          console.log('OK USUARIO REGISTRADO CORRECTAMENTE');
         }).catch((error) => {
           let errorCode = error.code;
           let errorMessage = error.message;
